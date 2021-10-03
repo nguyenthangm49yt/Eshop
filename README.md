@@ -3,6 +3,8 @@
 ## Set up :
 
 1. Clone the repo and cd into it
+docker-compose build
+docker-compose up -d
 2. composer install
 3. Rename or copy .env.example file to .env
 4. php artisan key:generate
