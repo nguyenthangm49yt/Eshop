@@ -117,11 +117,13 @@
           <label for="inputPhoto" class="col-form-label">Photo <span class="text-danger">*</span></label>
           <div class="input-group">
               <span class="input-group-btn">
-                  <a id="lfm" data-input="thumbnail" data-preview="holder" class="btn btn-primary">
+                  <!-- <a id="lfm" data-input="thumbnail" data-preview="holder" class="btn btn-primary">
+                   
                   <i class="fa fa-picture-o"></i> Choose
-                  </a>
+                  </a> -->
+                  <input  type="file"   id="pic"   accept="image/png, image/jpeg" name="photo" value="{{old('photo')}}">
               </span>
-          <input id="thumbnail" class="form-control" type="text" name="photo" value="{{old('photo')}}">
+          <!-- <input id="thumbnail" class="form-control" type="text" name="photo" value="{{old('photo')}}"> -->
         </div>
         <div id="holder" style="margin-top:15px;max-height:100px;"></div>
           @error('photo')

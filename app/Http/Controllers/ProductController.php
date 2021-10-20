@@ -6,8 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Brand;
-
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+
 
 class ProductController extends Controller
 {
@@ -143,9 +144,20 @@ class ProductController extends Controller
             'status'=>'required|in:active,inactive',
             'condition'=>'required|in:default,new,hot',
             'price'=>'required|numeric',
-            'discount'=>'nullable|numeric'
+            'discount'=>'nullable|numeric',
+            // 'image' => 'required'
         ]);
 
+        // storage image to s3 if having image file
+        if ($request->image) {
+            $file = $request->file('image');
+            $imageName= $file->getClientOriginalName();
+            $filePath = $file->storeAs(config('global.productsPath') , $imageName, 's3');
+            $request->merge([
+                'photo' => config('global.ss3Link') . $filePath,
+            ]);
+        }
+       
         $data=$request->all();
         $data['is_featured']=$request->input('is_featured',0);
         $size=$request->input('size');
