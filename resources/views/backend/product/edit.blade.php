@@ -120,24 +120,19 @@
         <span class="text-danger">{{$message}}</span>
         @enderror
       </div>
+      
       <div class="form-group">
         <label for="inputPhoto" class="col-form-label">Photo <span class="text-danger">*</span></label>
         <div class="input-group">
-
-          <!-- <span class="input-group-btn">
-                  <a id="lfm" data-input="thumbnail" data-preview="holder" class="btn btn-primary text-white">
-                  <i class="fas fa-image"></i> Choose
-                  </a>
-              </span> -->
 
           <input id="thumbnail" class="form-control" type="text" name="photo" value="{{$product->photo}}">
 
         </div>
 
         <br />
-        <input type="file" id="btn-upload" class="btn-upload" name="image">
+        <input type="file" id="btn-upload" multiple class="btn-upload" name="image[]">
 
-        <div id="photo-preview" style="height:auto ; padding-top:5px">
+        <div id="photo-preview" class="photo-preview" style="height:auto ; padding-top:5px">
 
           <img id="photo-preview-img" src="{{$product->photo}}" height="200px" alt="Image preview...">
 
@@ -180,35 +175,65 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
 
 
+
 <script>
-   function previewFile() {
-    var preview = document.querySelector('#photo-preview-img');
-    var file = document.querySelector('#btn-upload').files[0];
-    var reader = new FileReader();
-    // console.log("keke")
-    reader.onloadend = function() {
-      preview.src = reader.result;
+  // Preview multiple pic
+  $(function() {
+    // Multiple images preview in browser
+    var imagesPreview = function(input, placeToInsertImagePreview) {
+
+      if (input.files) {
+        var filesAmount = input.files.length;
+
+        for (i = 0; i < filesAmount; i++) {
+          var reader = new FileReader();
+
+
+          reader.onload = function(event) {
+            $($.parseHTML('<img>')).css('height', '5rem').attr('src', event.target.result).appendTo(placeToInsertImagePreview);
+          }
+
+          reader.readAsDataURL(input.files[i]);
+        }
+      }
+
+    };
+    $('#btn-upload').on('change', function() {
+      imagesPreview(this, 'div.photo-preview');
+    });
+
+    //set value to input
+    for (i = 0; i < this.files.length; i++) {
+      var reader = new FileReader();
+
+
+      reader.onload = function(event) {
+        $($.parseHTML('<img>')).css('height', '5rem').attr('src', event.target.result).appendTo(placeToInsertImagePreview);
+      }
+
+      reader.readAsDataURL(input.files[i]);
+
     }
 
-    if (file) {
-      reader.readAsDataURL(file);
-    } else {
-      preview.src = "";
-    }
-  }
-  //handle upload file
+    // var file_path = items.map(function (item) {
+    //         return item.url;
+    //       }).join(',');
+    // $('#thumbnail').val(fileName.replace(/C:\\fakepath\\/i, ''));
+
+
+  });
+</script>
+<script>
+  //handle add value to thumbnail-input when upload file
   $("#btn-upload").change(function(e) {
-    // var file = e.target.files[0];
+    var files = e.target.files;
+    var file_path = Object.values(files).map(function(item) {
+      return item.name;
+    }).join(',');
 
-    var fileName = e.target.files[0].name;
-    // $('#thumbnail').val($('#thumbnail').val()+ ',https://uet-dev.s3.amazonaws.com/'+ fileName.replace(/C:\\fakepath\\/i, ''));
-    $('#thumbnail').val(fileName.replace(/C:\\fakepath\\/i, ''));
-
-    previewFile()
+    $('#thumbnail').val(file_path.replace(/C:\\fakepath\\/i, ''));
 
   })
-
- 
 </script>
 <script>
   //  $('#lfm').filemanager('image');
