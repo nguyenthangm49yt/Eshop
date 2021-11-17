@@ -26,8 +26,9 @@ services:
       ports:
         - "9000:9000"
   mysql:
-      image: mysql:5.6
+      image: mysql:8.0
       container_name: eshop_db
+      restart: always
       ports:
         - "3306:3306"
       volumes:
