@@ -10,10 +10,19 @@
 | the IoC container for the system binding all of the various parts.
 |
 */
-
 $app = new Illuminate\Foundation\Application(
     $_ENV['APP_BASE_PATH'] ?? dirname(__DIR__)
 );
+
+if ($_SERVER['HTTP_HOST'] == "localhost") {
+    $app->loadEnvironmentFrom('.local.env');
+} else if ($_SERVER['HTTP_HOST'] == "dev.eshopuet.tk") {
+    $app->loadEnvironmentFrom('.dev.env');
+} else if ($_SERVER['HTTP_HOST'] == "stag.eshopuet.tk") {
+    $app->loadEnvironmentFrom('.stag.env');
+} else  {
+    $app->loadEnvironmentFrom('.env');
+}
 
 /*
 |--------------------------------------------------------------------------
