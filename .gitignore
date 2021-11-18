@@ -1,7 +1,7 @@
 /node_modules
 /public/hot
 /vendor
-/docker/mysql
+/docker/mysql/
 .env.backup
 .phpunit.result.cache
 Homestead.json
