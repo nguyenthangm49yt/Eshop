@@ -2,7 +2,8 @@
 /public/hot
 /vendor
 /docker/mysql/
-/docker
+docker
+.idea
 .env.backup
 .phpunit.result.cache
 Homestead.json
