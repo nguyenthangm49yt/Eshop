@@ -31,7 +31,6 @@ services:
       restart: always
       ports:
         - "3306:3306"
-      restart: always
       volumes:
         - ./docker/mysql:/var/lib/mysql
       environment:
@@ -46,5 +45,4 @@ services:
       restart: always
       ports:
           - "6379:6379"
-         
-  
+
