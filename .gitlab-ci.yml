@@ -1,0 +1,11 @@
+default:
+  image: php:7.4-fpm
+
+stages:
+    - test
+
+
+job1:
+  stage: test
+  script:
+    - echo "This job compiles code."
